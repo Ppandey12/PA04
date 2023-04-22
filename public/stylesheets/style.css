@@ -5,15 +5,6 @@ body {
 
 a {
   color: #00B7FF;
+
 }
 
-.container {
-  display: grid;
-  grid-template-rows: 50px 50px 50px 50px;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  background-color: aqua;
-  height: 3rem;
-  text-align: center;
-  height: 3rem;
-  margin-bottom: 3rem;
-}

@@ -3,8 +3,16 @@
 
 <div class="row">
   <div class="col">
-    
+
     <p> Here is your list of things to do! </p>
+    <div class="container">
+      <div class="item_item-1">1</div>
+      <div class="item_item-2">2</div>
+      <div class="item_item-3">3</div>
+      <div class="item_item-4">4</div>
+      <div class="item_item-4">5</div>
+    </div>
+
     <% if (show=='completed' ){%>
       <a class="btn btn-lg btn-primary" href="?show=todo">(Show tasks to do)</a>
       <% }else {%>
@@ -43,24 +51,25 @@
               <% }) %>
 
                 <form method="post" action="todo">
-                  new item: <input type="text" name="item">
+                  <!-- new item: <input type="text" name="item"> -->
+                  <input type="text" name="item" placeholder="description">
                   <br>
-                  priority: <select name="priority">
-                    <option>1 </option>
-                    <option>2 </option>
-                    <option>3 </option>
-                    <option>4 </option>
-                    <option>5 </option>
-                  </select>
+                  <input type="number" name="item" placeholder="category">
+                  <br>
+                  <input type="text" name="item" placeholder="amount">
+                  <br>
+                  <input type="date" name="item" placeholder="date">
+
+
                   <br>
                   <input type="submit" value="store">
                 </form>
   </div>
-  <div class="col">
+  <!-- <div class="col">
     <h2> Summary of Site Usage</h2>
     <p>
       <a class="btn btn-lg btn-primary" href="/todo/byUser">Show todo counts for all users</a>
     </p>
-  </div>
+  </div> -->
 </div>
 </div>

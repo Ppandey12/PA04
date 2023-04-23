@@ -5,10 +5,14 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 var transSchema = Schema({
-  item: String,
-  completed: Boolean,
-  createdAt: Date,
-  priority: Number,
+  description: String,
+  categoty: String,
+  amount: Number,
+  date: Date,
+  // item: String,
+  // completed: Boolean,
+  // createdAt: Date,
+  // priority: Number,
   userId: { type: ObjectId, ref: 'user' }
 });
 

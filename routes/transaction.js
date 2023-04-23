@@ -4,7 +4,7 @@
 const express = require('express');
 // const { render } = require('../app');
 const router = express.Router();
-const ToDoItem = require('../models/transactionItem')
+const Transaction_i = require('../models/transactionItem')
 const User = require('../models/User')
 
 
@@ -25,6 +25,8 @@ isLoggedIn = (req, res, next) => {
   }
 }
 
+
+
 // // get the value associated to the key
 router.get('/transaction/',
   isLoggedIn,
@@ -34,11 +36,11 @@ router.get('/transaction/',
     let items = []
     if (show) { // show is completed or todo, so just show some items
       items =
-        await ToDoItem.find({ userId: req.user._id, completed })
+        await Transaction_i.find({ userId: req.user._id, completed })
           .sort({ completed: 1, priority: 1, createdAt: 1 })
     } else {  // show is null, so show all of the items
       items =
-        await ToDoItem.find({ userId: req.user._id })
+        await Transaction_i.find({ userId: req.user._id })
           .sort({ completed: 1, priority: 1, createdAt: 1 })
 
     }
@@ -47,78 +49,79 @@ router.get('/transaction/',
 
 
 
-// /* add the value in the body to the list associated to the key */
-// // router.post('/transaction',
-// //   isLoggedIn,
-// //   async (req, res, next) => {
-// //     const todo = new ToDoItem(
-// //       {
-// //         item: req.body.item,
-// //         createdAt: new Date(),
-// //         completed: false,
-// //         priority: parseInt(req.body.priority),
-// //         userId: req.user._id
-// //       })
-// //     await todo.save();
-// //     res.redirect('/todo')
-// //   });
+/* add the value in the body to the list associated to the key */
+router.post('/transaction',
+  isLoggedIn,
+  async (req, res, next) => {
+    const new_transaction_list = new Transaction_i(
+      {
+        description: req.body.description,
+        catagory: req.body.catagory,
+        amount: req.body.amount,
+        date: req.body.date,
+        userId: req.user._id
 
-// router.get('/transaction/remove/:itemId',
-//   isLoggedIn,
-//   async (req, res, next) => {
-//     console.log("inside /todo/remove/:itemId")
-//     await ToDoItem.deleteOne({ _id: req.params.itemId });
-//     res.redirect('/toDo')
-//   });
+      })
+    await new_transaction_list.save();
+    res.redirect('/transaction')
+  });
+
+router.get('/transaction/remove/:itemId',
+  isLoggedIn,
+  async (req, res, next) => {
+    console.log("inside /transaction/remove/:itemId")
+    await Transaction_i.deleteOne({ _id: req.params.itemId });
+    res.redirect('/transaction')
+  });
 
 // router.get('/transaction/complete/:itemId',
 //   isLoggedIn,
 //   async (req, res, next) => {
-//     console.log("inside /todo/complete/:itemId")
-//     await ToDoItem.findOneAndUpdate(
+//     console.log("inside /transaction/complete/:itemId")
+//     await Transaction_i.findOneAndUpdate(
 //       { _id: req.params.itemId },
 //       { $set: { completed: true } });
-//     res.redirect('/toDo')
+//     res.redirect('/transaction')
 //   });
 
-// router.get('/transaction/uncomplete/:itemId',
-//   isLoggedIn,
-//   async (req, res, next) => {
-//     console.log("inside /todo/complete/:itemId")
-//     await ToDoItem.findOneAndUpdate(
-//       { _id: req.params.itemId },
-//       { $set: { completed: false } });
-//     res.redirect('/toDo')
-//   });
+router.get('/transaction/uncomplete/:itemId',
+  isLoggedIn,
+  async (req, res, next) => {
+    console.log("inside /transaction/complete/:itemId")
+    await Transaction_i.findOneAndUpdate(
+      { _id: req.params.itemId },
+      { $set: { completed: false } });
+    res.redirect('/transaction')
+  });
 
-// router.get('/transaction/edit/:itemId',
-//   isLoggedIn,
-//   async (req, res, next) => {
-//     console.log("inside /todo/edit/:itemId")
-//     const item =
-//       await ToDoItem.findById(req.params.itemId);
-//     //res.render('edit', { item });
-//     res.locals.item = item
-//     res.render('edit')
-//     //res.json(item)
-//   });
+router.get('/transaction/edit/:itemId',
+  isLoggedIn,
+  async (req, res, next) => {
+    console.log("inside /transaction/edit/:itemId")
+    const item =
+      await Transaction_i.findById(req.params.itemId);
+    //res.render('edit', { item });
+    res.locals.item = item
+    res.render('edit')
+    //res.json(item)
+  });
 
-// router.post('/transaction/updateTodoItem',
-//   isLoggedIn,
-//   async (req, res, next) => {
-//     const { itemId, item, priority } = req.body;
-//     console.log("inside /todo/complete/:itemId");
-//     await ToDoItem.findOneAndUpdate(
-//       { _id: itemId },
-//       { $set: { item, priority } });
-//     res.redirect('/toDo')
-//   });
+router.post('/transaction/updateTransaction_i',
+  isLoggedIn,
+  async (req, res, next) => {
+    const { itemId, item, priority } = req.body;
+    console.log("inside /transaction/complete/:itemId");
+    await Transaction_i.findOneAndUpdate(
+      { _id: itemId },
+      { $set: { item, priority } });
+    res.redirect('/transaction')
+  });
 
 // router.get('/transaction/byUser',
 //   isLoggedIn,
 //   async (req, res, next) => {
 //     let results =
-//       await ToDoItem.aggregate(
+//       await Transaction_i.aggregate(
 //         [
 //           {
 //             $group: {

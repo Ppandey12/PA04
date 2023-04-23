@@ -9,10 +9,6 @@ var transSchema = Schema({
   categoty: String,
   amount: Number,
   date: Date,
-  // item: String,
-  // completed: Boolean,
-  // createdAt: Date,
-  // priority: Number,
   userId: { type: ObjectId, ref: 'user' }
 });
 

@@ -84,15 +84,15 @@ router.get('/transaction/remove/:itemId',
 //     res.redirect('/transaction')
 //   });
 
-router.get('/transaction/uncomplete/:itemId',
-  isLoggedIn,
-  async (req, res, next) => {
-    console.log("inside /transaction/complete/:itemId")
-    await Transaction_i.findOneAndUpdate(
-      { _id: req.params.itemId },
-      { $set: { completed: false } });
-    res.redirect('/transaction')
-  });
+// router.get('/transaction/uncomplete/:itemId',
+//   isLoggedIn,
+//   async (req, res, next) => {
+//     console.log("inside /transaction/complete/:itemId")
+//     await Transaction_i.findOneAndUpdate(
+//       { _id: req.params.itemId },
+//       { $set: { completed: false } });
+//     res.redirect('/transaction')
+//   });
 
 router.get('/transaction/edit/:itemId',
   isLoggedIn,
@@ -109,11 +109,11 @@ router.get('/transaction/edit/:itemId',
 router.post('/transaction/updateTransaction_i',
   isLoggedIn,
   async (req, res, next) => {
-    const { itemId, item, priority } = req.body;
+    const { description, category, amount, date, itemId, item, priority } = req.body;
     console.log("inside /transaction/complete/:itemId");
     await Transaction_i.findOneAndUpdate(
       { _id: itemId },
-      { $set: { item, priority } });
+      { $set: { description, category, amount, date } });
     res.redirect('/transaction')
   });
 

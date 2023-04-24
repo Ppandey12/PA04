@@ -8,19 +8,22 @@
     <table>
       <tr>
         <th>
-          <div class="item_item-1"><a class="btn btn-primary" href="">group by category</a></div>
+          <div class="item_item-1"><a class="btn btn-primary" href="/transaction/group_categories">group by category</a>
+          </div>
         </th>
         <th>
-          <div class="item_item-1"><a class="btn btn-primary" href="">sort by catagory</a></div>
+          <div class="item_item-1"><a class="btn btn-primary" href="/transaction/sort_category">sort by catagory</a>
+          </div>
         </th>
         <th>
-          <div class="item_item-1"><a class="btn btn-primary" href="">sort by amount</a></div>
+          <div class="item_item-1"><a class="btn btn-primary" href="/transaction/amount">sort by amount</a></div>
         </th>
         <th>
-          <div class="item_item-1"><a class="btn btn-primary" href="">sort by description</a></div>
+          <div class="item_item-1"><a class="btn btn-primary" href="/transaction/description">sort by description</a>
+          </div>
         </th>
         <th>
-          <div class="item_item-1"><a class="btn btn-primary" href="">sort by date</a></div>
+          <div class="item_item-1"><a class="btn btn-primary" href="/transaction/date">sort by date</a></div>
         </th>
       </tr>
     </table>
@@ -36,7 +39,7 @@
 
 
 
-    <table>
+    <table class="">
       <tr>
         <th>description</th>
         <th>amount</th>
@@ -47,55 +50,50 @@
       </tr>
 
 
+      <!-- </table> -->
 
 
+      <% items.forEach(item=> { %>
+
+        <!-- <table class="table table-bordered table-striped"> -->
+
+        <td>
+          <%= item.description %>
+        </td>
+        <td>
+          <%= item.amount%>
+        </td>
+        <td>
+          <%= item.category%>
+        </td>
+        <td>
+          <%= item.date %>
+        </td>
+        <td>
+          <a href="/transaction/remove/<%=item._id %>">
+            <i class="bi bi-trash"></i>
+          </a>
+        </td>
+        <td> <a href="/transaction/edit/<%=item._id %>">
+            <i class="bi bi-pencil-square"></i>
+          </a></td>
 
     </table>
 
 
-    <% items.forEach(item=> { %>
-
-
-
-
-      <li class="list-group-item">
-
-        <!-- <a href="/transaction/remove/<%=item._id %>">
-          <i class="bi bi-trash"></i>
-        </a>
-        </span>
-        <span class="mx-5"> -->
-
-        <%= item.description %>
-          <%= item.categoty %>
-            <%= item.amount %>
-              <%= item.date %>
-
-                </span>
-
-                <a href="/transaction/edit/<%=item._id %>">
-                  <i class="bi bi-pencil-square"></i>
-                </a>
-
-                <a href="/transaction/remove/<%=item._id %>">
-                  <i class="bi bi-trash"></i>
-                </a>
-
-      </li>
-      <br>
-      <% }) %>
-        <h1>Add A New Transaction</h1>
-        <form method="post" action="/transaction">
-          description: <input type="text" name="description" placeholder="description">
-          <br>
-          catagory: <input type="text" name="category" placeholder="category">
-          <br>
-          amount: <input type="number" name="amount" placeholder="amount">
-          <br>
-          date: <input type="date" name="date" placeholder="date">
-          <br>
-          <input type="submit" value="store">
-        </form>
+    <% }) %>
+      <h1>Add A New Transaction</h1>
+      <form method="post" action="/transaction">
+        <input type="text" name="description" placeholder="description">
+        <br>
+        <input type="text" name="category" placeholder="category">
+        <br>
+        <input type="number" name="amount" placeholder="amount">
+        <br>
+        <input type="date" name="date" placeholder="date">
+        <br>
+        <input type="submit" value="store">
+      </form>
   </div>
   <!-- <div class="col">
     <h2> Summary of Site Usage</h2>
@@ -105,3 +103,18 @@
   </div> -->
 </div>
 </div>
+
+
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+  }
+
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+</style>

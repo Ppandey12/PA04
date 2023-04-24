@@ -52,19 +52,24 @@ router.get('/transaction/',
 /* add the value in the body to the list associated to the key */
 router.post('/transaction',
   isLoggedIn,
-  async (req, res, next) => {
+  async (req, res) => {
+    console.log(req.body.category || "No category")
+    let dateTime = new Date(req.body.date)
+    dateTime = dateTime
     const new_transaction_list = new Transaction_i(
       {
         description: req.body.description,
-        catagory: req.body.catagory,
+        category: req.body.category,
         amount: req.body.amount,
-        date: req.body.date,
+        date: dateTime,
         userId: req.user._id
 
       })
     await new_transaction_list.save();
     res.redirect('/transaction')
   });
+
+
 
 router.get('/transaction/remove/:itemId',
   isLoggedIn,
@@ -98,18 +103,18 @@ router.get('/transaction/edit/:itemId',
   isLoggedIn,
   async (req, res, next) => {
     console.log("inside /transaction/edit/:itemId")
-    const item =
-      await Transaction_i.findById(req.params.itemId);
+    const item = await Transaction_i.findById(req.params.itemId);
     //res.render('edit', { item });
-    res.locals.item = item
-    res.render('edit')
-    //res.json(item)
+    // res.locals.item = item
+    // res.locals.item
+    res.render('transactionedit', { item })
+    // res.json(item)
   });
 
 router.post('/transaction/updateTransaction_i',
   isLoggedIn,
   async (req, res, next) => {
-    const { description, category, amount, date, itemId, item, priority } = req.body;
+    const { itemId, description, category, amount, date } = req.body;
     console.log("inside /transaction/complete/:itemId");
     await Transaction_i.findOneAndUpdate(
       { _id: itemId },
@@ -117,32 +122,80 @@ router.post('/transaction/updateTransaction_i',
     res.redirect('/transaction')
   });
 
-// router.get('/transaction/byUser',
-//   isLoggedIn,
-//   async (req, res, next) => {
-//     let results =
-//       await Transaction_i.aggregate(
-//         [
-//           {
-//             $group: {
-//               _id: '$userId',
-//               total: { $count: {} }
-//             }
-//           },
-//           { $sort: { total: -1 } },
-//         ])
 
-//     results =
-//       await User.populate(results,
-//         {
-//           path: '_id',
-//           select: ['username', 'age']
-//         })
 
-//     //res.json(results)
-//     res.render('summarizeByUser', { results })
-//   });
 
+router.get('/transaction/group_categories',
+  isLoggedIn,
+  async (req, res, next) => {
+    let results =
+      await Transaction_i.aggregate(
+        [
+          {
+            $group: {
+              _id: '$category',
+              count: { $sum: 1 }
+            }
+          },
+          { $sort: { count: -1 } },
+        ])
+    // res.json(results)
+    res.render('sortTransaction', { results })
+  });
+
+
+
+router.get('/transaction/sort_category',
+  isLoggedIn,
+  async (req, res, next) => {
+    let results =
+      await Transaction_i.aggregate(
+        [
+          { $sort: { count: -1 } },
+        ])
+    // res.json(results)
+    res.render('sortTransaction', { results })
+  });
+
+
+router.get('/transaction/description',
+  isLoggedIn,
+  async (req, res, next) => {
+    let results =
+      await Transaction_i.aggregate(
+        [
+
+          { $sort: { count: -1 } },
+        ])
+    // res.json(results)
+    res.render('sortTransaction', { results })
+  });
+
+router.get('/transaction/amount',
+  isLoggedIn,
+  async (req, res, next) => {
+    let results =
+      await Transaction_i.aggregate(
+        [
+
+          { $sort: { count: -1 } },
+        ])
+    // res.json(results)
+    res.render('sortTransaction', { results })
+  });
+
+router.get('/transaction/date',
+  isLoggedIn,
+  async (req, res, next) => {
+    let results =
+      await Transaction_i.aggregate(
+        [
+
+          { $sort: { count: -1 } },
+        ])
+    // res.json(results)
+    res.render('sortTransaction', { results })
+  });
 
 
 module.exports = router;

@@ -1,4 +1,4 @@
-<h1> Transactions for <%= user.username %>
+<h1> Transactions For <%= user.username %>
 </h1>
 
 <div class="row">
@@ -28,6 +28,10 @@
       </tr>
     </table>
 
+    <!-- <pre>
+      <%= JSON.stringify(items,null,5) %>
+    </pre> -->
+
     <!-- <% if (show=='completed' ){%>
       <a class="btn btn-lg btn-primary" href="?show=todo">(Show tasks to do)</a>
       <% }else {%>
@@ -39,61 +43,62 @@
 
 
 
-    <table class="">
-      <tr>
-        <th>description</th>
-        <th>amount</th>
-        <th>category</th>
-        <th>date</th>
-        <th>delete</th>
-        <th>edit</th>
-      </tr>
-
-
-      <!-- </table> -->
-
+    <table>
+      <thead>
+        <tr>
+          <th>description</th>
+          <th>amount</th>
+          <th>category</th>
+          <th>date</th>
+          <th>delete</th>
+          <th>edit</th>
+        </tr>
+      </thead>
 
       <% items.forEach(item=> { %>
+        <tbody>
+          <!-- <table class="table table-bordered table-striped"> -->
+          <tr>
+            <td>
+              <%= item.description %>
+            </td>
+            <td>
+              <%= item.amount%>
+            </td>
+            <td>
+              <%= item.category%>
+            </td>
+            <td>
+              <%= item.date %>
+            </td>
+            <td>
+              <a href="/transaction/remove/<%=item._id %>">
+                <i class="bi bi-trash"></i>
+              </a>
+            </td>
+            <td> <a href="/transaction/edit/<%=item._id %>">
+                <i class="bi bi-pencil-square"></i>
+              </a></td>
+          </tr>
 
-        <!-- <table class="table table-bordered table-striped"> -->
+          <% }) %>
 
-        <td>
-          <%= item.description %>
-        </td>
-        <td>
-          <%= item.amount%>
-        </td>
-        <td>
-          <%= item.category%>
-        </td>
-        <td>
-          <%= item.date %>
-        </td>
-        <td>
-          <a href="/transaction/remove/<%=item._id %>">
-            <i class="bi bi-trash"></i>
-          </a>
-        </td>
-        <td> <a href="/transaction/edit/<%=item._id %>">
-            <i class="bi bi-pencil-square"></i>
-          </a></td>
+        </tbody>
 
     </table>
 
-
-    <% }) %>
-      <h1>Add A New Transaction</h1>
-      <form method="post" action="/transaction">
-        <input type="text" name="description" placeholder="description">
-        <br>
-        <input type="text" name="category" placeholder="category">
-        <br>
-        <input type="number" name="amount" placeholder="amount">
-        <br>
-        <input type="date" name="date" placeholder="date">
-        <br>
-        <input type="submit" value="store">
-      </form>
+    <h1>Add A New Transaction</h1>
+    <form method="post" action="/transaction">
+      <input type="text" name="description" placeholder="description">
+      <br>
+      <input type="text" name="category" placeholder="category">
+      <br>
+      <input type="number" name="amount" placeholder="amount">
+      <br>
+      <input type="date" name="date" placeholder="date">
+      <br>
+      <input type="submit" value="store">
+    </form>
   </div>
   <!-- <div class="col">
     <h2> Summary of Site Usage</h2>

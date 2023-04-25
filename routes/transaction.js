@@ -124,36 +124,25 @@ router.post('/transaction/updateTransaction_i',
 
 
 
+// sort ||||
+
 
 router.get('/transaction/group_categories',
   isLoggedIn,
   async (req, res, next) => {
     let results =
-      await Transaction_i.aggregate(
-        [
-          {
-            $group: {
-              _id: '$category',
-              count: { $sum: 1 }
-            }
-          },
-          { $sort: { count: -1 } },
-        ])
-    // res.json(results)
-    res.render('sortTransaction', { results })
-  });
+      await Transaction_i.find({ userId: req.user._id }).sort({ category: 1, amount: 1 })
 
+    res.render('transactionn_gro_cat', { results })
+  });
 
 
 router.get('/transaction/sort_category',
   isLoggedIn,
   async (req, res, next) => {
     let results =
-      await Transaction_i.aggregate(
-        [
-          { $sort: { count: -1 } },
-        ])
-    // res.json(results)
+      await Transaction_i.find({ userId: req.user._id }).sort({ description: 1 })
+
     res.render('sortTransaction', { results })
   });
 
@@ -162,12 +151,8 @@ router.get('/transaction/description',
   isLoggedIn,
   async (req, res, next) => {
     let results =
-      await Transaction_i.aggregate(
-        [
+      await Transaction_i.find({ userId: req.user._id }).sort({ category: 1 })
 
-          { $sort: { count: -1 } },
-        ])
-    // res.json(results)
     res.render('sortTransaction', { results })
   });
 
@@ -175,12 +160,8 @@ router.get('/transaction/amount',
   isLoggedIn,
   async (req, res, next) => {
     let results =
-      await Transaction_i.aggregate(
-        [
+      await Transaction_i.find({ userId: req.user._id }).sort({ amount: 1 })
 
-          { $sort: { count: -1 } },
-        ])
-    // res.json(results)
     res.render('sortTransaction', { results })
   });
 
@@ -188,12 +169,8 @@ router.get('/transaction/date',
   isLoggedIn,
   async (req, res, next) => {
     let results =
-      await Transaction_i.aggregate(
-        [
+      await Transaction_i.find({ userId: req.user._id }).sort({ date: 1 })
 
-          { $sort: { count: -1 } },
-        ])
-    // res.json(results)
     res.render('sortTransaction', { results })
   });
 

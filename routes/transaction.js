@@ -118,7 +118,7 @@ router.post('/transaction/updateTransaction_i',
     console.log("inside /transaction/complete/:itemId");
     await Transaction_i.findOneAndUpdate(
       { _id: itemId },
-      { $set: { description, category, amount, date } });
+      { description: description, category: category, amount: amount, date: date });
     res.redirect('/transaction')
   });
 

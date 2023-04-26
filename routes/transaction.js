@@ -104,9 +104,6 @@ router.get('/transaction/edit/:itemId',
   async (req, res, next) => {
     console.log("inside /transaction/edit/:itemId")
     const item = await Transaction_i.findById(req.params.itemId);
-    //res.render('edit', { item });
-    // res.locals.item = item
-    // res.locals.item
     res.render('transactionedit', { item })
     // res.json(item)
   });
